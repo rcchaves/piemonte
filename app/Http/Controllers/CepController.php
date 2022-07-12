@@ -52,14 +52,17 @@ class CepController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cep  $cep
+     * @param  Integer
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        if ($request->has('cep')) {
-            $valor = $request->cep;
-        }
+        $cep = $this->cep->find($id);
+        if($cep === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404) ;
+        } 
+
+        return response()->json($cep, 200);
     }
 
     public function search($cep)
